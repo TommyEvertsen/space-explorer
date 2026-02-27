@@ -3,7 +3,7 @@ const Footer = () => {
     <div className="footerWrapper">
       <div className="footer flexcol text-center items-center bg-off-background  py-4">
         <div className="">
-          <p className="text-text">
+          <p className="text-text text-sm">
             Developed by:{" "}
             <a
               href="https://tommyevertsen.github.io/About_me"
@@ -16,7 +16,7 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <p className="text-text text-sm">
+          <p className="text-text text-xs mt-1">
             Api by:{" "}
             <a
               href="https://api.nasa.gov/"

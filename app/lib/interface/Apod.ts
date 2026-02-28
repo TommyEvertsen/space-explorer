@@ -1,4 +1,4 @@
-interface ApodInterface {
+export default interface ApodInterface {
   copyright?: string;
   date?: string;
   explanation: string;

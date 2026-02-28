@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FaGlobe, FaHome, FaSatellite } from "react-icons/fa";
+import { FaGlobe, FaHome, FaSatellite, FaMeteor } from "react-icons/fa";
 
 interface SidebarProps {
   open: boolean;
@@ -19,6 +19,10 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
     router.push("/apod");
   };
 
+  const neo = () => {
+    router.push("/neo");
+  };
+
   const links = [
     {
       title: "Home",
@@ -29,6 +33,11 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       title: "Apod",
       onclick: apod,
       icon: FaSatellite,
+    },
+    {
+      title: "Neo",
+      onclick: neo,
+      icon: FaMeteor,
     },
   ];
 

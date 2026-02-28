@@ -25,10 +25,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-text py-4">
+    <div className="min-h-screen bg-background text-text py-8">
       {apodData ? (
         <>
-          <div className="flex flex-col text-center pt-8">
+          <div className="flex flex-col text-center ">
             <div className="intro">
               <h1 className="title text-2xl text-text-alt">
                 Astronomy picture of the day:

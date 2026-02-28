@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const API_KEY = process.env.API_KEY;
-  const startTime = Date.now();
 
   try {
     const response = await fetch(
@@ -14,8 +13,6 @@ export async function GET(request: NextRequest) {
     );
 
     const data = await response.json();
-    const endTime = Date.now();
-    console.log(`APOD API response time: ${endTime - startTime}ms`);
 
     return NextResponse.json(data);
   } catch (error) {

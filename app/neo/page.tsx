@@ -69,7 +69,7 @@ const Neo = () => {
                         Miss Distance (km)
                       </th>
                       <th className="border border-border p-2 text-left">
-                        Hazardous
+                        PHO
                       </th>
                     </tr>
                   </thead>
@@ -200,6 +200,32 @@ const Neo = () => {
             <p className="text-text text-xl">Loading NEO data...</p>
           </div>
         )}
+      </div>
+      <div className="explWrapper flex flex-col gap-y-2 justify-center w-full max-w-6xl mx-auto mt-4 px-2 text-sm ">
+        <div className="expl    ">
+          <p>Explanation:</p>
+        </div>
+        <div className="expl">
+          <p className="text-text-alt">NEO:</p>
+          <p>
+            NEOs are asteroids and comets with perihelion distance q less than
+            1.3 au . Near-Earth Comets (NECs) are further restricted to include
+            only short-period comets (i.e., orbital period P less than 200
+            years). The vast majority of NEOs are asteroids
+          </p>
+        </div>
+        <div className="expl">
+          <p className="text-text-alt">PHO:</p>
+          <p>
+            Potentially Hazardous Objects (PHOs): Not all NEOs are dangerous. An
+            object is classified as a "Potentially Hazardous Object" only if it
+            meets two specific criteria: Its orbit brings it within 0.05 AU
+            (about 7.5 million kilometers or 4.6 million miles) of Earth's
+            orbit. It is large enough to cause significant regional or global
+            damage, generally defined as being at least 140 meters (460 feet) in
+            diameter.
+          </p>
+        </div>
       </div>
     </div>
   );

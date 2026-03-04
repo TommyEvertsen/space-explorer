@@ -1,7 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FaGlobe, FaHome, FaSatellite, FaMeteor } from "react-icons/fa";
+import {
+  FaGlobe,
+  FaHome,
+  FaSatellite,
+  FaMeteor,
+  FaRobot,
+} from "react-icons/fa";
 
 interface SidebarProps {
   open: boolean;
@@ -23,6 +29,10 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
     router.push("/neo");
   };
 
+  const mrp = () => {
+    router.push("/mrp");
+  };
+
   const links = [
     {
       title: "Home",
@@ -38,6 +48,11 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       title: "Neo",
       onclick: neo,
       icon: FaMeteor,
+    },
+    {
+      title: "Mrp",
+      onclick: mrp,
+      icon: FaRobot,
     },
   ];
 

@@ -6,7 +6,9 @@
   --border: #575757;
   --text: #fafafa;
   --textAlt: #b26f7b;
+  --textAlt2: #6fb2b2;
   --hover: #cd9ea5;
+  --hover2: #8cc5c5;
 }
 
 @theme inline {
@@ -15,7 +17,9 @@
   --color-border: var(--border);
   --color-text: var(--text);
   --color-hover: var(--hover);
+  --color-hover2: var(--hover2);
   --color-text-alt: var(--textAlt);
+  --color-text-alt2: var(--textAlt2);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

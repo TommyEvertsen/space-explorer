@@ -1,7 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Scatter } from "react-chartjs-2";
 import type NeoInterface from "@/app/lib/interface/Neo";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 const Neo = () => {
   const [neoData, setNeoData] = useState<NeoInterface | null>(null);
@@ -35,6 +56,105 @@ const Neo = () => {
     return allNeos;
   };
 
+  const getScatterData = () => {
+    const neos = getAllNeos();
+    if (neos.length === 0) return null;
+
+    const scatterData = neos.map((neo, index) => {
+      const missDistance = parseFloat(
+        neo.close_approach_data[0]?.miss_distance.kilometers || "0",
+      );
+
+      return {
+        x: index + 1,
+        y: missDistance / 1000000,
+        name: neo.name,
+        isPho: neo.is_potentially_hazardous_asteroid,
+      };
+    });
+
+    const regularNeos = scatterData.filter((neo) => !neo.isPho);
+    const phoNeos = scatterData.filter((neo) => neo.isPho);
+
+    return {
+      datasets: [
+        {
+          label: "NEOs",
+          data: regularNeos,
+          backgroundColor: "#6fb2b2",
+          borderColor: "#575757",
+          pointRadius: 4,
+        },
+        {
+          label: "PHOs",
+          data: phoNeos,
+          backgroundColor: "rgba(239, 68, 68, 0.6)",
+          borderColor: "rgba(239, 68, 68, 1)",
+          pointRadius: 6,
+        },
+      ],
+    };
+  };
+
+  const scatterOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top" as const,
+        labels: {
+          color: "#e2e8f0",
+        },
+      },
+      title: {
+        display: true,
+        text: "NEO Miss Distances from Earth",
+        color: "#e2e8f0",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            const neo = context.raw;
+            return [
+              `Name: ${neo.name}`,
+              `Distance: ${context.parsed.y.toFixed(2)} million km`,
+              `PHO: ${neo.isPho ? "Yes" : "No"}`,
+            ];
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        type: "linear" as const,
+        title: {
+          display: true,
+          text: "NEO Index",
+          color: "#e2e8f0",
+        },
+        ticks: {
+          color: "#e2e8f0",
+        },
+        grid: {
+          color: "#374151",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Miss Distance (Million km)",
+          color: "#e2e8f0",
+        },
+        ticks: {
+          color: "#e2e8f0",
+        },
+        grid: {
+          color: "#374151",
+        },
+      },
+    },
+  };
+
   const handleRowClick = (nasa_jpl_url: string) => {
     window.open(nasa_jpl_url, "_blank");
   };
@@ -51,6 +171,25 @@ const Neo = () => {
 
         {neoData ? (
           <>
+            <div className="chartWrapper mb-8">
+              <div className="flex justify-center">
+                <div className="w-full max-w-6xl border border-border p-4 rounded">
+                  <div className="h-96">
+                    {getScatterData() ? (
+                      <Scatter
+                        data={getScatterData()!}
+                        options={scatterOptions}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center h-full">
+                        <p className="text-text-alt">Loading chart data...</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="hidden md:block tableWrapper overflow-x-auto  py-2">
               <div className="flex justify-center">
                 <table className="w-full max-w-6xl border-collapse border border-border">

@@ -18,14 +18,17 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const router = useRouter();
 
   const home = () => {
+    setOpen(false);
     router.push("/");
   };
 
   const apod = () => {
+    setOpen(false);
     router.push("/apod");
   };
 
   const neo = () => {
+    setOpen(false);
     router.push("/neo");
   };
 

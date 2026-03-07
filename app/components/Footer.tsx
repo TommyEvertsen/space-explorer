@@ -6,7 +6,7 @@ const Footer = () => {
           <p className="text-text text-sm">
             Developed by:{" "}
             <a
-              href="https://tommyevertsen.github.io/About_me"
+              href="https://about-me-five-beta.vercel.app"
               target="_blank"
               referrerPolicy="no-referrer"
               className="text-text-alt hover:text-hover"

@@ -65,10 +65,19 @@ const Neo = () => {
         neo.close_approach_data[0]?.miss_distance.kilometers || "0",
       );
 
+      const avgDiameter =
+        (neo.estimated_diameter.kilometers.estimated_diameter_min +
+          neo.estimated_diameter.kilometers.estimated_diameter_max) /
+        2;
+
+      const pointRadius = Math.max(3, Math.min(15, avgDiameter * 10 + 3));
+
       return {
         x: index + 1,
         y: missDistance / 1000000,
         name: neo.name,
+        diameter: avgDiameter,
+        pointRadius: pointRadius,
         isPho: neo.is_potentially_hazardous_asteroid,
       };
     });
@@ -83,14 +92,14 @@ const Neo = () => {
           data: regularNeos,
           backgroundColor: "#6fb2b2",
           borderColor: "#575757",
-          pointRadius: 4,
+          pointRadius: regularNeos.map((neo) => neo.pointRadius),
         },
         {
           label: "PHOs",
           data: phoNeos,
           backgroundColor: "rgba(239, 68, 68, 0.6)",
           borderColor: "rgba(239, 68, 68, 1)",
-          pointRadius: 6,
+          pointRadius: phoNeos.map((neo) => neo.pointRadius),
         },
       ],
     };
@@ -118,6 +127,7 @@ const Neo = () => {
             return [
               `Name: ${neo.name}`,
               `Distance: ${context.parsed.y.toFixed(2)} million km`,
+              `Diameter: ${neo.diameter.toFixed(3)} km`,
               `PHO: ${neo.isPho ? "Yes" : "No"}`,
             ];
           },

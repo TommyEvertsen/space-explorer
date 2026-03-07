@@ -25,6 +25,10 @@ ChartJS.register(
 const Home = () => {
   const news = [
     {
+      text: "Added near earth object scattermap",
+      date: "07/03/2026",
+    },
+    {
       text: "Launched the first version of the page",
       date: "5/3/2026",
     },
@@ -77,7 +81,6 @@ const Home = () => {
     if (!neoData?.near_earth_objects) return null;
 
     const dates = Object.keys(neoData.near_earth_objects).sort();
-    const counts = dates.map((date) => neoData.near_earth_objects[date].length);
     const labels = dates.map((date) =>
       new Date(date).toLocaleDateString("en-GB", {
         month: "short",
@@ -85,14 +88,32 @@ const Home = () => {
       }),
     );
 
+    const regularCounts = dates.map((date) => {
+      const neos = neoData.near_earth_objects[date];
+      return neos.filter((neo) => !neo.is_potentially_hazardous_asteroid)
+        .length;
+    });
+
+    const phoCounts = dates.map((date) => {
+      const neos = neoData.near_earth_objects[date];
+      return neos.filter((neo) => neo.is_potentially_hazardous_asteroid).length;
+    });
+
     return {
       labels,
       datasets: [
         {
-          label: "Near Earth Objects",
-          data: counts,
+          label: "NEOs",
+          data: regularCounts,
           backgroundColor: "#6fb2b2",
           borderColor: "#575757",
+          borderWidth: 1,
+        },
+        {
+          label: "PHOs",
+          data: phoCounts,
+          backgroundColor: "rgba(239, 68, 68, 0.6)",
+          borderColor: "rgba(239, 68, 68, 1)",
           borderWidth: 1,
         },
       ],
@@ -145,18 +166,18 @@ const Home = () => {
           </h1>
         </div>
         <div className="content flex flex-col md:flex-row gap-6 text-text py-8 md:py-16 px-4 md:px-16 ">
-          <div className="news border-collapse border border-border px-4 py-2 max-h-62 overflow-y-auto md:w-1/2">
+          <div className="news border-collapse border border-border px-4 py-2 max-h-82 overflow-y-auto md:w-1/2">
             <h2 className="">Site news:</h2>
             {news.map((story) => (
               <div className="py-1" key={story.date}>
-                <p className="text-text-alt2">{story.date}</p>
+                <p className="text-text-alt">{story.date}</p>
                 <p>{story.text}</p>
               </div>
             ))}
           </div>
-          <div className="neosChart border-collapse border border-border px-4 py-2 max-h-62  md:w-1/2">
+          <div className="neosChart border-collapse border border-border px-4 py-2 max-h-82  md:w-1/2">
             <h2 className="mb-2">Recent Neo's:</h2>
-            <div className="h-48">
+            <div className="h-68">
               {neoData && getChartData() ? (
                 <Bar data={getChartData()!} options={chartOptions} />
               ) : (
